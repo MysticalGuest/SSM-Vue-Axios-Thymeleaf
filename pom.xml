@@ -7,7 +7,7 @@
 	<!-- 用来设置版本号 -->
 	<properties>
 		<!-- Spring 版本-->
-		<srping.version>4.0.2.RELEASE</srping.version>
+		<srping.version>5.2.3.RELEASE</srping.version>
 		<!-- Mybatis版本 -->
 		<mybatis.version>3.2.8</mybatis.version>
 		<!-- log4j日志文件管理包版本 -->
