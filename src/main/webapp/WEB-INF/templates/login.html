@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" th:href="@{hoteldemo/img/bird.ico}"  type="image/x-icon"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>尊品360宾馆服务平台</title>
+	<link rel="stylesheet" th:href="@{hoteldemo/css/style-login.css}">
+	
+	<script th:src="@{js/jquery.min.js}"></script>
+	<!--表单验证-->
+	<script th:src="@{js/jquery.validate.min.js}"></script>
+	<!--Modernizr是一个开源的JS库,它使得那些基于访客浏览器的不同（指对新标准支持性的差异）而开发不同级别体验的设计师的工作变得更为简单-->
+	<script th:src="@{js/modernizr.custom.js}"></script>
+</head>
+<body>
+	<div class="login-container">
+		
+		<div class="connect">
+			<p>系统账号登录</p>
+		</div>
+		
+		<form th:action="@{/login}" th:method="post" id="loginForm" onsubmit="return validateLimit()">
+			<input type="text" name="AdmId" class="AdmId" placeholder="账号" autocomplete="off"/>
+			
+			<input type="password" name="aPassword" class="aPassword" placeholder="密码" oncontextmenu="return false" />
+
+			<div class="rdo">
+				<input type="radio" name="rdo" class="rdolist" value="front" checked="checked" />
+				<label class="rdobox">
+					<span class="check-image"></span>
+					<span class="radiobox-content">前台</span>
+				</label>
+				
+				<input type="radio" name="rdo" class="rdolist" value="administrator" />
+				<label class="rdobox">
+					<span class="check-image"></span>
+					<span class="radiobox-content">经理</span>
+				</label>
+			</div>
+			
+			<button id="submit" type="submit">登 陆</button>
+		</form>
+
+		<a th:href="@{register}">
+			<button type="button" class="register-tis">还有没有账号？</button>
+		</a>
+	</div>
+	<script th:src="@{hoteldemo/js/js-login.js}"></script>
+</body>
+</html>
