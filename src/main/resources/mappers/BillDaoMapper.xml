@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="com.distinguish.dao.BillDao">
+	<!-- 
+		statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+		resultType：sql语句查询结果集的封装类型,
+		parameterType="java.lang.String"
+	-->
+	
+	<!-- 查询语句  -->
+	<select id="getPerKindsTotalPerDay" resultType="java.util.Map">
+		SELECT 
+		CASE WHEN sum(tea) is null then 0 else sum(tea) end as numOfTea,
+		CASE WHEN sum(greenTea) is null then 0 else sum(greenTea) end as numOfGreenTea,
+		CASE WHEN sum(mineral) is null then 0 else sum(mineral) end as numOfMineral,
+		CASE WHEN sum(noodles) is null then 0 else sum(noodles) end as numOfNoodles,
+		CASE WHEN sum(pulsation) is null then 0 else sum(pulsation) end as numOfPulsation,
+		CASE WHEN sum(WLJJDB) is null then 0 else sum(WLJJDB) end as numOfWLJJDB 
+		FROM bill 
+		WHERE inTime BETWEEN DATE_ADD(curdate(),INTERVAL 8 HOUR) 
+		AND DATE_ADD(DATE_SUB(curdate(),INTERVAL -1 DAY),INTERVAL 8 HOUR);
+	</select>
+	
+	<select id="getRoomChargePerCustomerPerDay" resultType="java.util.Map">
+		SELECT inTime,sum(price) sumPrice 
+		FROM bill,apartment 
+		WHERE bill.roomNum = apartment.roomNum 
+		and inTime between DATE_ADD(curdate(),INTERVAL 8 HOUR) 
+		and DATE_ADD(DATE_SUB(curdate(),INTERVAL -1 DAY),INTERVAL 8 HOUR) 
+		group by inTime;
+	</select>
+	
+	<select id="getTurnoverPerDayThisWeek" resultType="java.util.Map">
+		SELECT 
+		DATE_FORMAT(inTime,'%Y-%m-%d') inDate,
+		CASE WHEN SUM(tea) IS NULL THEN 0 ELSE SUM(tea) END AS numOfTea,
+		CASE WHEN SUM(greenTea) IS NULL THEN 0 ELSE SUM(greenTea) END AS numOfGreenTea,
+		CASE WHEN SUM(mineral) IS NULL THEN 0 ELSE SUM(mineral) END AS numOfMineral,
+		CASE WHEN SUM(noodles) IS NULL THEN 0 ELSE SUM(noodles) END AS numOfNoodles,
+		CASE WHEN SUM(pulsation) IS NULL THEN 0 ELSE SUM(pulsation) END AS numOfPulsation,
+		CASE WHEN SUM(WLJJDB) IS NULL THEN 0 ELSE SUM(WLJJDB) END AS numOfWLJJDB,
+		CASE WHEN SUM(price) IS NULL THEN 0 ELSE SUM(price) END AS turnover 
+		FROM bill,apartment 
+		WHERE bill.roomNum=apartment.roomNum 
+		AND YEARWEEK(DATE_FORMAT(inTime,'%Y-%m-%d'),1)=YEARWEEK(NOW(),1) 
+		GROUP BY DATE_FORMAT(inTime,'%Y-%m-%d');
+	</select>
+	
+	<select id="getTurnoverPerDayLastWeek" resultType="java.util.Map">
+		SELECT 
+		DATE_FORMAT(inTime,'%Y-%m-%d') inDate,
+		CASE WHEN SUM(tea) IS NULL THEN 0 ELSE SUM(tea) END AS numOfTea,
+		CASE WHEN SUM(greenTea) IS NULL THEN 0 ELSE SUM(greenTea) END AS numOfGreenTea,
+		CASE WHEN SUM(mineral) IS NULL THEN 0 ELSE SUM(mineral) END AS numOfMineral,
+		CASE WHEN SUM(noodles) IS NULL THEN 0 ELSE SUM(noodles) END AS numOfNoodles,
+		CASE WHEN SUM(pulsation) IS NULL THEN 0 ELSE SUM(pulsation) END AS numOfPulsation,
+		CASE WHEN SUM(WLJJDB) IS NULL THEN 0 ELSE SUM(WLJJDB) END AS numOfWLJJDB,
+		CASE WHEN SUM(price) IS NULL THEN 0 ELSE SUM(price) END AS turnover 
+		FROM bill,apartment 
+		WHERE bill.roomNum=apartment.roomNum 
+		AND YEARWEEK(DATE_FORMAT(inTime,'%Y-%m-%d'),1)=YEARWEEK(NOW(),1)-1 
+		GROUP BY DATE_FORMAT(inTime,'%Y-%m-%d');
+	</select>
+	
+	<select id="getTurnoverPerWeekLastMonth" resultType="java.util.Map">
+		SELECT 
+		DATE_FORMAT(inTime,'%Y-%m-%d') inDate,
+		CASE WHEN SUM(tea) IS NULL THEN 0 ELSE SUM(tea) END AS numOfTea,
+		CASE WHEN SUM(greenTea) IS NULL THEN 0 ELSE SUM(greenTea) END AS numOfGreenTea,
+		CASE WHEN SUM(mineral) IS NULL THEN 0 ELSE SUM(mineral) END AS numOfMineral,
+		CASE WHEN SUM(noodles) IS NULL THEN 0 ELSE SUM(noodles) END AS numOfNoodles,
+		CASE WHEN SUM(pulsation) IS NULL THEN 0 ELSE SUM(pulsation) END AS numOfPulsation,
+		CASE WHEN SUM(WLJJDB) IS NULL THEN 0 ELSE SUM(WLJJDB) END AS numOfWLJJDB,
+		CASE WHEN SUM(price) IS NULL THEN 0 ELSE SUM(price) END AS turnover 
+		FROM bill,apartment 
+		WHERE bill.roomNum=apartment.roomNum 
+		AND DATE_FORMAT(inTime,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') 
+		AND YEARWEEK(DATE_FORMAT(inTime,'%Y-%m-%d'),1)=YEARWEEK(NOW(),1)-1 
+		GROUP BY DATE_FORMAT(inTime,'%Y-%m-%d');
+	</select>
+	
+	<select id="getTurnoverPerWeekThisMonth" resultType="java.util.Map">
+		SELECT 
+		DATE_FORMAT(inTime,'%Y-%m-%d') inDate,
+		CASE WHEN SUM(tea) IS NULL THEN 0 ELSE SUM(tea) END AS numOfTea,
+		CASE WHEN SUM(greenTea) IS NULL THEN 0 ELSE SUM(greenTea) END AS numOfGreenTea,
+		CASE WHEN SUM(mineral) IS NULL THEN 0 ELSE SUM(mineral) END AS numOfMineral,
+		CASE WHEN SUM(noodles) IS NULL THEN 0 ELSE SUM(noodles) END AS numOfNoodles,
+		CASE WHEN SUM(pulsation) IS NULL THEN 0 ELSE SUM(pulsation) END AS numOfPulsation,
+		CASE WHEN SUM(WLJJDB) IS NULL THEN 0 ELSE SUM(WLJJDB) END AS numOfWLJJDB,
+		CASE WHEN SUM(price) IS NULL THEN 0 ELSE SUM(price) END AS turnover 
+		FROM bill,apartment 
+		WHERE bill.roomNum=apartment.roomNum 
+		AND DATE_FORMAT(inTime,'%Y-%m')=DATE_FORMAT(CURDATE(),'%Y-%m') 
+		GROUP BY DATE_FORMAT(inTime,'%Y-%m-%d');
+	</select>
+	
+	<select id="getTurnoverPerQuarterThisYear" resultType="java.util.Map">
+		SELECT 
+		DATE_FORMAT(inTime,'%Y-%m') inDate,
+		CASE WHEN SUM(tea) IS NULL THEN 0 ELSE SUM(tea) END AS numOfTea,
+		CASE WHEN SUM(greenTea) IS NULL THEN 0 ELSE SUM(greenTea) END AS numOfGreenTea,
+		CASE WHEN SUM(mineral) IS NULL THEN 0 ELSE SUM(mineral) END AS numOfMineral,
+		CASE WHEN SUM(noodles) IS NULL THEN 0 ELSE SUM(noodles) END AS numOfNoodles,
+		CASE WHEN SUM(pulsation) IS NULL THEN 0 ELSE SUM(pulsation) END AS numOfPulsation,
+		CASE WHEN SUM(WLJJDB) IS NULL THEN 0 ELSE SUM(WLJJDB) END AS numOfWLJJDB,
+		CASE WHEN SUM(price) IS NULL THEN 0 ELSE SUM(price) END AS turnover 
+		FROM bill,apartment 
+		WHERE bill.roomNum=apartment.roomNum AND DATE_FORMAT(inTime,'%Y')>YEAR(NOW())-1 
+		GROUP BY CONCAT(DATE_FORMAT(inTime, '%Y'),FLOOR((DATE_FORMAT(inTime, '%m')+2)/3)) 
+		ORDER BY inTime ASC;
+	</select>
+	
+	<select id="getTurnoverTheseYears" resultType="java.util.Map">
+		SELECT 
+		DATE_FORMAT(inTime,'%Y') inDate,
+		CASE WHEN SUM(tea) IS NULL THEN 0 ELSE SUM(tea) END AS numOfTea,
+		CASE WHEN SUM(greenTea) IS NULL THEN 0 ELSE SUM(greenTea) END AS numOfGreenTea,
+		CASE WHEN SUM(mineral) IS NULL THEN 0 ELSE SUM(mineral) END AS numOfMineral,
+		CASE WHEN SUM(noodles) IS NULL THEN 0 ELSE SUM(noodles) END AS numOfNoodles,
+		CASE WHEN SUM(pulsation) IS NULL THEN 0 ELSE SUM(pulsation) END AS numOfPulsation,
+		CASE WHEN SUM(WLJJDB) IS NULL THEN 0 ELSE SUM(WLJJDB) END AS numOfWLJJDB,
+		CASE WHEN SUM(price) IS NULL THEN 0 ELSE SUM(price) END AS turnover 
+		FROM bill,apartment 
+		WHERE bill.roomNum=apartment.roomNum AND DATE_FORMAT(inTime,'%Y')>YEAR(NOW())-5 
+		GROUP BY CONCAT(DATE_FORMAT(inTime, '%Y'));
+	</select>
+
+	<!-- 插入语句 -->
+	<insert id="insert" parameterType="com.distinguish.entity.Bill" useGeneratedKeys = "true" keyProperty = "billId">
+		insert into bill (roomNum,inTime) values (#{roomNum,jdbcType=VARCHAR},#{inTime})
+	</insert>
+	
+	<select id="getBillPerDay" resultType="com.distinguish.entity.Bill">
+		SELECT cName,chargeAndDeposit,bill.* 
+		FROM bill,customer 
+		WHERE bill.inTime BETWEEN DATE_ADD(curdate(),INTERVAL 8 HOUR) 
+		and DATE_ADD(DATE_SUB(curdate(),INTERVAL -1 DAY),INTERVAL 8 HOUR) 
+		and bill.inTime=customer.inTime order by bill.inTime desc;
+	</select>
+	
+</mapper>

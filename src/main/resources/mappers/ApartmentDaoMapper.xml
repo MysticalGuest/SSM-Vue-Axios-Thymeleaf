@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="com.distinguish.dao.ApartmentDao">
+	<!-- 
+		statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+		resultType：sql语句查询结果集的封装类型,
+		parameterType="java.lang.String"
+	-->
+
+	<!-- 查询语句  -->
+	<select id="getSpareApartment" resultType="com.distinguish.entity.Apartment">
+		select * from apartment where state=false;
+	</select>
+	
+	<select id="getAllApartment" resultType="com.distinguish.entity.Apartment">
+		select * from apartment;
+	</select>
+	
+	<select id="searchApartment" resultType="com.distinguish.entity.Apartment" parameterType="java.util.Map">
+		select * from apartment 
+		where roomNum LIKE CONCAT('%',#{roomNum},'%') 
+		<if test="price != ''" >
+			and price=#{price}
+	    </if>
+	    <if test="state != ''" >
+			and state=#{state}
+	    </if>
+		;
+	</select>
+	
+	<select id="getPrice" resultType="Integer">
+		select distinct price from apartment order by price asc;
+	</select>
+	
+	<update id="checkIn" parameterType="Integer" >
+		update apartment 
+	    <set>
+	    	state=true
+	    </set>
+	    where roomNum=#{roomNum}
+	</update>
+	
+	<update id="checkOut" parameterType="Integer" >
+		update apartment 
+	    <set>
+	    	state=false
+	    </set>
+	    where roomNum=#{roomNum}
+	</update>
+	
+	<update id="allCheckOut" parameterType="Integer" >
+		update apartment 
+	    <set>
+	    	state=false
+	    </set>
+	</update>
+</mapper>

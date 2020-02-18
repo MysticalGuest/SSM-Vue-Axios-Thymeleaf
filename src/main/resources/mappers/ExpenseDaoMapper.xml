@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="com.distinguish.dao.ExpenseDao">
+	<!-- 
+		statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+		resultType：sql语句查询结果集的封装类型,
+		parameterType="java.lang.String"
+	-->
+
+	<!-- 查询语句 -->
+	<select id="getAllKinds" resultType="com.distinguish.entity.Expense">
+		select * from expense where kinds not in ('HourRoom', 'DefaultPrice');
+	</select>
+	
+	<select id="getHourRoom" resultType="Integer">
+		select price from expense where kinds = 'HourRoom';
+	</select>
+	
+</mapper>

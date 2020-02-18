@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="com.distinguish.dao.CustomerDao">
+	<!-- 
+		statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+		resultType：sql语句查询结果集的封装类型,
+		parameterType="java.lang.String"
+	-->
+
+	<!-- 查询语句 -->
+	<select id="getAllCustomers" resultType="com.distinguish.entity.Customer">
+		SELECT * FROM customer order by inTime desc;
+	</select>
+	
+	<select id="conditionalSearch" resultType="com.distinguish.entity.Customer">
+		SELECT * FROM customer 
+		where inTime like '%${inTime}%' and cName like '%${cName}%' and roomNum like '%${roomNum}%' 
+		order by inTime desc;
+	</select>
+	
+	<select id="getNumOfBillPerDay" resultType="Integer">
+		<!-- 每天早上8点更新一天的数据 -->
+		SELECT count(*) FROM customer 
+		WHERE inTime BETWEEN DATE_ADD(curdate(),INTERVAL 8 HOUR) 
+		AND DATE_ADD(DATE_SUB(curdate(),INTERVAL -1 DAY),INTERVAL 8 HOUR);
+	</select>
+	
+	<select id="getNumOfRoomPerDay" resultType="java.lang.String">
+		<!-- 每天早上8点更新一天的数据 -->
+		SELECT roomNum FROM customer 
+		WHERE inTime BETWEEN DATE_ADD(curdate(),INTERVAL 8 HOUR) 
+		AND DATE_ADD(DATE_SUB(curdate(),INTERVAL -1 DAY),INTERVAL 8 HOUR);
+	</select>
+	
+	<select id="getSumOfFeePerDay" resultType="Integer">
+		SELECT sum(chargeAnddeposit) FROM customer 
+		WHERE inTime between DATE_ADD(curdate(),INTERVAL 8 HOUR) 
+		AND DATE_ADD(DATE_SUB(curdate(),INTERVAL -1 DAY),INTERVAL 8 HOUR);
+	</select>
+	
+	<select id="getProfit" resultType="Integer">
+		select sum(price) from apartment where roomNum in ${roomNum};
+	</select>
+	
+	<!-- 插入语句 -->
+	<insert id="insert" parameterType="com.distinguish.entity.Customer" useGeneratedKeys = "true" keyProperty = "inTime">
+		insert into 
+		customer (inTime,cName,cardID,roomNum,chargeAndDeposit,paymentMethod)
+		values (#{inTime},#{cName},#{cardID},#{roomNum},#{chargeAndDeposit},#{paymentMethod})
+	</insert>
+	
+</mapper>

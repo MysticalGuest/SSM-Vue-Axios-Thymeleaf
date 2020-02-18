@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<!-- 
+	命名空间的作用有两个,一个是利用更长的完全限定名来将不同的语句隔离开来,
+	同时也实现了你上面见到的接口绑定。
+	就算你觉得暂时用不到接口绑定,你也应该遵循这里的规定,以防哪天你改变了主意。
+	长远来看，只要将命名空间置于合适的 Java 包命名空间之中,你的代码会变得更加整洁,
+	也有利于你更方便地使用 MyBatis。 
+-->
+<mapper namespace="com.distinguish.dao.AdministratorDao">
+	<!-- 
+		namespace是该xml对应的接口全名，select和update中的id对应方法名，
+		resultType是返回值类型，parameterType是参数类型（这个其实可选），最后#{...}中填写的是方法的参数
+	-->
+	<!-- 
+		statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+		resultType：sql语句查询结果集的封装类型,administrator即为数据库中的表
+		parameterType="java.lang.String"
+	-->
+
+	<!-- 查询语句 -->
+	<select id="getAllAdministrators" resultType="com.distinguish.entity.Administrator">
+		SELECT * FROM administrator;
+	</select>
+	
+	<select id="login" resultType="com.distinguish.entity.Administrator">
+		SELECT * 
+		FROM administrator 
+		WHERE AdmId = #{AdmId} and aPassword = #{aPassword}  
+		<!-- 
+			limit是MySQL关键字,直接使用会报错;
+			解决办法:
+			在插入或者修改字段时,字段名加上  ` 包上;注意:这里不是引号,是英文格式下,波浪线那个按键
+		 -->
+		<if test="limit != ''" >
+			and `limit` = #{limit}
+	    </if>
+		;
+	</select>
+	
+	<select id="validateId" resultType="com.distinguish.entity.Administrator">
+		SELECT * 
+		FROM administrator 
+		WHERE AdmId = #{AdmId};
+	</select>
+</mapper>
