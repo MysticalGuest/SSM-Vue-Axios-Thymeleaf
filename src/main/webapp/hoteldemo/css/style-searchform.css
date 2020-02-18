@@ -1,0 +1,45 @@
+/* Create by MysticalGuest */
+@CHARSET "UTF-8";
+body{height:100%; width:100%; overflow:hidden; margin:0; padding:0}
+.theme{
+	font-family: HYChaoJiZhanJiaW;
+	font-size:  50px;
+	margin-left: 30px;
+}
+.img-responsive {
+	margin-left: 200px;
+	width: 250px;
+}
+.row {
+	margin-top: 10px;
+}
+#timegroup {
+	margin-bottom: 25px;
+}
+.btn-block {
+	margin-bottom: 25px;
+}
+.form-group > input {
+	margin-bottom: 25px
+}
+.input-group {
+	margin-bottom: 25px;
+}
+.table > tbody td {
+	padding: 7px;
+	margin: 0;
+	/* background-color: #d9edf7; */
+	/* height:20px !important; */
+}
+.panel-primary {
+	margin: 0px;
+	padding:0;
+	margin-bottom: 25px;
+}
+/* 移除HTML5 input在type="number"时的上下小箭头 */
+#roomNum::-webkit-outer-spin-button,
+#roomNum::-webkit-inner-spin-button{
+    -webkit-appearance: none !important;
+    margin: 0; 
+}
+

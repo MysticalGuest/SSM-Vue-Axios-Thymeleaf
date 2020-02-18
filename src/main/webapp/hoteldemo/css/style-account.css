@@ -1,0 +1,65 @@
+/* Create by MysticalGuest */
+@CHARSET "UTF-8";
+body{text-align: center;}
+.main{width:77%;position:relative;margin:auto;}
+#layer02 > div{float:left;position:relative;}
+.layer02-data{font-family: "new york";position: absolute;width: auto;color: red;top: 45px;left: 65px;}
+.header{
+	height: 80px;
+	position: relative;
+	padding-top: 13px;
+	font-size: 36px;
+	color: #000000;
+	text-align: center;
+	background: url(../img/chartHeader.png) top center no-repeat;
+	font-family: HYChaoJiZhanJiaW;
+}
+.header a.a-access{
+	position: absolute;
+	right: 3%;
+	top: -18%;
+}
+.button {
+	position: relative;
+	padding: 0.5em 1.5em;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	outline: none;
+	font-size: 18px;
+	margin: 1em 0.8em;
+}
+.button.type {
+	color: #000000;
+	font-family: HYChaoJiZhanJiaW;
+}
+.button.type.type::after,.button.type.type::before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 20%;
+	height: 20%;
+	border: 2px solid;
+	transition: all 0.6s ease;
+	border-radius: 2px;
+}
+.button.type.type::after {
+	bottom: 0;
+	right: 0;
+	border-top-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #566473;
+	border-right-color: #566473;
+}
+.button.type.type::before {
+	top: 0;
+	left: 0;
+	border-bottom-color: transparent;
+	border-right-color: transparent;
+	border-top-color: #566473;
+	border-left-color: #566473;
+}
+.button.type.type:hover:after, .button.type.type:hover:before {
+	width: 100%;
+	height: 100%;
+}

@@ -1,0 +1,70 @@
+/* Create by MysticalGuest */
+@CHARSET "UTF-8";
+table {
+	border-left: none;border-right: none;border-top: none;
+	height: 300px;
+	/* 文本居中 */
+	text-align: center;
+	/* 表格居中 */
+	margin: 0px auto;
+	/* cellspacing="1" */
+	border-collapse: separate;
+	border-spacing: 1px;
+}
+/* table tr td {text-align: center} */
+/* 将表格分为11 X 7的栅格*/
+.td-1 {
+	text-align: center; font-weight: bold;
+	font-size: 35px;border-left: none;border-top: none;border-right: none;
+}
+.td-2-1 {border-left: none;border-right: none;}
+.td-2-3 {border-left: none;}
+.td-2-5 {border-right: none;}
+.td-2-6 {border-left: none;}
+.td-2-6 div {width:60px;height:25px;}
+.td-2-7 {border-right: none;}
+.td-2-8 {border-left: none;}
+.dropdown-menu {min-width: 230px;}
+.td-2-10 {border-right: none;}
+.td-2-11 {border-right: none;border-left: none;}
+
+.td-3-1 {border-left: none;}
+.td-3-8 {border-right: none;}
+
+.td-4-1 {border-left: none;}
+.td-4-4 input {width: 30px;border-style: none;}
+.td-4-5 div {width: 20px;display: inline;}
+.td-4-6 {border-right: none;}
+.td-4-6 div {width: 20px;display: inline;}
+.td-4-7 {border-right: none;}
+.td-4-7 div {width: 20px;display: inline;}
+.td-4-8 {border-left: none;border-right: none;}
+
+.td-5-1 {border-left: none;}
+.td-5-4 input {width: 30px;border-style: none;}
+.td-5-5 div {width: 20px;display: inline;}
+.td-5-6 {border-right: none;}
+.td-5-6 div {width: 20px;display: inline;}
+.td-5-7 {border-right: none;}
+.td-5-7 div {width: 20px;display: inline;}
+.td-5-8 {border-left: none;border-right: none;}
+
+.td-6-1 {border-left: none;border-right: none;}
+.td-6-3 {border-left: none;}
+.td-6-3 div {width:40px;height:25px;float: left;}
+.td-6-7 {border-right: none;}
+
+.td-7-1 {border-left: none;border-right: none;}
+.td-7-2 {border-left: none;}
+.td-7-6 {border-right: none;}
+.td-7-7 {border-left: none;}
+.td-7-8 {border-right: none;}
+
+.tserver-list1 a {text-decoration: none;}
+.tserver-list2 a {text-decoration: none;color:white;}
+
+#cardbox {padding:3px;background-color: #656d73;border-radius: 5px;width: 20%;margin-left: 40%;}
+#cardbox input {height: 30px;border:1px solid #C4C4C4;border-radius: 5px;}
+#paymentbox {color:white;padding:3px;background-color: #656d73;border-radius: 5px;
+width: 20%;margin-left: 40%;margin-top: 2%;font-weight: 700;font-size: 20px;}
+#paymentbox input {cursor:pointer;zoom:130%;}

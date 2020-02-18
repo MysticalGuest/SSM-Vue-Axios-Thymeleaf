@@ -1,0 +1,18 @@
+/* Create by MysticalGuest */
+@CHARSET "UTF-8";
+@font-face {
+  font-family: "HYChaoJiZhanJiaW";
+  src: url("../font/HYChaoJiZhanJiaW.woff2") format("woff2"),
+       url("../font/HYChaoJiZhanJiaW.woff") format("woff"),
+       url("../font/HYChaoJiZhanJiaW.ttf") format("truetype"),
+       url("../font/HYChaoJiZhanJiaW.eot") format("embedded-opentype"),
+       url("../font/HYChaoJiZhanJiaW.svg") format("svg");
+}
+@font-face {
+  font-family: "JY";
+  src: url("../font/JY.woff2") format("woff2"),
+       url("../font/JY.woff") format("woff"),
+       url("../font/JY.ttf") format("truetype"),
+       url("../font/JY.eot") format("embedded-opentype"),
+       url("../font/JY.svg") format("svg");
+}

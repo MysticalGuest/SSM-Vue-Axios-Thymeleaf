@@ -1,0 +1,76 @@
+/* Create by MysticalGuest */
+@CHARSET "UTF-8";
+.main-box {
+	width: 100%;
+	height: auto;
+	margin: 50px auto;
+	text-align: center;
+}
+.index-tserver {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 2.6%
+}
+.index-tserver li {
+	width: 10%;
+	min-width: 162px;
+	height: 162px;
+	text-align: center;
+	box-sizing: border-box;
+	padding-top: 106px;
+	font-size: 14px;
+	color: #656d73;
+	display: inline-block;
+	position: relative;
+	cursor: pointer;
+	margin-bottom: 10px;
+	margin-left: -0.1%
+}
+.index-tserver li.tserver-list1 {
+	float: left;
+	left:20%;
+	background: url('../img/bill/360server-exit-grey.png') no-repeat center top
+}
+.index-tserver li.tserver-list2 {
+	float: right;
+	right: 20%;
+	background: url('../img/bill/360server-bill-grey.png') no-repeat center top
+}
+.index-tserver li p {
+	width: 162px;
+	height: 162px;
+	display: inline-block;
+	position: absolute;
+	top: 0%;
+	left: 50%;
+	margin-left: -81px;
+	border-radius: 81px;
+	padding: 40px 30px;
+	box-sizing: border-box;
+	text-align: left;
+	font-size: 14px;
+	line-height: 22px;
+	background: linear-gradient(111deg, grey, black);
+	display: none
+}
+.index-tserver li p a {
+	color: #fff
+}
+.index-tserver li p.animated {
+	animation-duration: .5s;
+	animation-fill-mode: both
+}
+.index-tserver li:hover p {
+	display: block
+}
+.zoomin {
+	animation-name: zoomin
+}
+@keyframes zoomin {
+0% {
+opacity:0;
+transform:scale(.3)
+}
+50% {
+opacity:1
+}
