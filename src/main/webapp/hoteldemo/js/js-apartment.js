@@ -200,39 +200,46 @@ new Vue({
 	}
 })
 
-// 表格中的按钮对应方法
-//new Vue({
-//	el: '#apartment',
-//	data: {},
-//	methods: {
-//		//全部退房调用函数
-//    	checkOut:function(){
-//    		axios({
-//				url:'../commonOperation/checkOut',
-//				method:'post',
-//				header: {'Content-Type':'application/json'}
-//			})
-//			.then(function (response) {
-//				$("#apartment").bootstrapTable('load', formatData(response.data));
-//			})
-//			.catch(function (error) {
-//				console.log(error);
-//				BootstrapDialog.show({
-//					title: '提示',
-//				    message: '退房失败!',
-//				    buttons: [{
-//				        label: '确定',
-//				        cssClass: 'btn-primary',
-//				        action: function(dialogItself){
-//				            dialogItself.close();
-//				            location.href='/SSMHotel/front/ApartmentForFront'
-//				        }
-//				    }]
-//				});
-//			})
-//    	}
-//	}
-//})
+// 这段必须放在表格初始化之前
+function formatAction(value,row,index){
+	var checkOut = '<button id="bind" style="cursor:pointer;border:1px solid #ccc;border-radius: 2px;">退房</button>';
+	if(row.state=="未开出")
+		return null;
+	else if(row.state=="已开出"){
+		return checkOut;
+	}
+}
+
+window.operateEvents = {
+	'click #bind': function (e, value, row, index) {
+		let param = new URLSearchParams();
+		param.append("roomNum", row.roomNum);
+		axios({
+			url:'../commonOperation/checkOut',
+			method:'post',
+			data: param,
+			header: {'Content-Type':'application/json'}
+		})
+		.then(function (response) {
+			$("#apartment").bootstrapTable('load', formatData(response.data));
+		})
+		.catch(function (error) {
+			console.log(error);
+			BootstrapDialog.show({
+				title: '提示',
+			    message: '退房失败!',
+			    buttons: [{
+			        label: '确定',
+			        cssClass: 'btn-primary',
+			        action: function(dialogItself){
+			            dialogItself.close();
+			            location.href='/SSMHotel/front/ApartmentForFront'
+			        }
+			    }]
+			});
+		})
+	}
+};
 
 // 传来表格数据
 var apartmentData;
@@ -250,19 +257,6 @@ $(function() {
 		dataType: "json",		//期待返回数据类型
 		method: "get",			//请求方式
 		// load: data,
-		// searchAlign: "left",//查询框对齐方式
-		// queryParamsType: "limit",//查询参数组织方式
-		// queryParams: function getParams(params) {
-		//     //params obj
-		//     params.other = "otherInfo";
-		//     return params;
-		// },
-		// searchOnEnterKey: false,//回车搜索
-		// showRefresh: true,//刷新按钮
-		// showColumns: true,//列选择按钮
-		// buttonsAlign: "left",//按钮对齐方式
-		// toolbar: "#toolbar",//指定工具栏
-		// toolbarAlign: "right",//工具栏对齐方式
 		columns: [
 			{
 				title: "全选",
@@ -287,6 +281,7 @@ $(function() {
 				align: "center",
 				valign: "middle",
 				formatter: 'formatAction',	//对本列数据做格式化
+				events: operateEvents,//给按钮注册事件
 			}
 		],
 		locale: "zh-CN",	//中文支持
@@ -299,16 +294,4 @@ $(function() {
 
 function tableHeight() {
 	return $(window).height() - 110;
-}
-
-function formatAction(value,row,index){
-	var checkOut = '<button onclick="a()" style="cursor:pointer;border:1px solid #ccc;border-radius: 2px;">退房</button>';
-	if(row.state=="未开出")
-		return ;
-	else if(row.state=="已开出")
-		return checkOut;
-}
-
-function a(){
-	alert("LKLLKL");
 }
