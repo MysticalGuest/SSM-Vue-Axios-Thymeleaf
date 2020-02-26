@@ -27,6 +27,10 @@
 		AND DATE_ADD(DATE_SUB(curdate(),INTERVAL -1 DAY),INTERVAL 8 HOUR);
 	</select>
 	
+	<select id="getNumOfBill" resultType="Integer">
+		SELECT count(*) FROM customer;
+	</select>
+	
 	<select id="getNumOfRoomPerDay" resultType="java.lang.String">
 		<!-- 每天早上8点更新一天的数据 -->
 		SELECT roomNum FROM customer 
@@ -34,10 +38,18 @@
 		AND DATE_ADD(DATE_SUB(curdate(),INTERVAL -1 DAY),INTERVAL 8 HOUR);
 	</select>
 	
+	<select id="getNumOfRoom" resultType="java.lang.String">
+		SELECT roomNum FROM customer;
+	</select>
+	
 	<select id="getSumOfFeePerDay" resultType="Integer">
 		SELECT sum(chargeAnddeposit) FROM customer 
 		WHERE inTime between DATE_ADD(curdate(),INTERVAL 8 HOUR) 
 		AND DATE_ADD(DATE_SUB(curdate(),INTERVAL -1 DAY),INTERVAL 8 HOUR);
+	</select>
+	
+	<select id="getSumOfFee" resultType="Integer">
+		SELECT sum(chargeAnddeposit) FROM customer;
 	</select>
 	
 	<select id="getProfit" resultType="Integer">

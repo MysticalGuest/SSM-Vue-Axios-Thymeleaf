@@ -18,4 +18,12 @@
 		select price from expense where kinds = 'HourRoom';
 	</select>
 	
+	<update id="updatePrice" parameterType="com.distinguish.entity.Expense" >
+		update expense
+	    <set>
+	    	price=#{price}
+	    </set>
+	    WHERE kinds=#{kinds};
+  	</update>
+	
 </mapper>

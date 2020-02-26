@@ -23,12 +23,30 @@
 		AND DATE_ADD(DATE_SUB(curdate(),INTERVAL -1 DAY),INTERVAL 8 HOUR);
 	</select>
 	
+	<select id="getPerKindsTotal" resultType="java.util.Map">
+		SELECT 
+		CASE WHEN sum(tea) is null then 0 else sum(tea) end as numOfTea,
+		CASE WHEN sum(greenTea) is null then 0 else sum(greenTea) end as numOfGreenTea,
+		CASE WHEN sum(mineral) is null then 0 else sum(mineral) end as numOfMineral,
+		CASE WHEN sum(noodles) is null then 0 else sum(noodles) end as numOfNoodles,
+		CASE WHEN sum(pulsation) is null then 0 else sum(pulsation) end as numOfPulsation,
+		CASE WHEN sum(WLJJDB) is null then 0 else sum(WLJJDB) end as numOfWLJJDB 
+		FROM bill;
+	</select>
+	
 	<select id="getRoomChargePerCustomerPerDay" resultType="java.util.Map">
 		SELECT inTime,sum(price) sumPrice 
 		FROM bill,apartment 
 		WHERE bill.roomNum = apartment.roomNum 
 		and inTime between DATE_ADD(curdate(),INTERVAL 8 HOUR) 
 		and DATE_ADD(DATE_SUB(curdate(),INTERVAL -1 DAY),INTERVAL 8 HOUR) 
+		group by inTime;
+	</select>
+	
+	<select id="getRoomChargePerCustomer" resultType="java.util.Map">
+		SELECT inTime,sum(price) sumPrice 
+		FROM bill,apartment 
+		WHERE bill.roomNum = apartment.roomNum 
 		group by inTime;
 	</select>
 	
@@ -127,11 +145,6 @@
 		WHERE bill.roomNum=apartment.roomNum AND DATE_FORMAT(inTime,'%Y')>YEAR(NOW())-5 
 		GROUP BY CONCAT(DATE_FORMAT(inTime, '%Y'));
 	</select>
-
-	<!-- 插入语句 -->
-	<insert id="insert" parameterType="com.distinguish.entity.Bill" useGeneratedKeys = "true" keyProperty = "billId">
-		insert into bill (roomNum,inTime) values (#{roomNum,jdbcType=VARCHAR},#{inTime})
-	</insert>
 	
 	<select id="getBillPerDay" resultType="com.distinguish.entity.Bill">
 		SELECT cName,chargeAndDeposit,bill.* 
@@ -140,5 +153,41 @@
 		and DATE_ADD(DATE_SUB(curdate(),INTERVAL -1 DAY),INTERVAL 8 HOUR) 
 		and bill.inTime=customer.inTime order by bill.inTime desc;
 	</select>
+	
+	<select id="getBill" resultType="com.distinguish.entity.Bill">
+		SELECT cName,chargeAndDeposit,bill.* 
+		FROM bill,customer 
+		WHERE bill.inTime=customer.inTime order by bill.inTime desc;
+	</select>
+
+	<!-- 插入语句 -->
+	<insert id="insert" parameterType="com.distinguish.entity.Bill" useGeneratedKeys = "true" keyProperty = "billId">
+		insert into bill (roomNum,inTime) values (#{roomNum,jdbcType=VARCHAR},#{inTime})
+	</insert>
+	
+	<update id="updateExpense" parameterType="map" >
+		update bill
+	    <set>
+	    	<if test="field=='mineral'" >
+        		mineral = #{value,jdbcType=INTEGER},
+      		</if>
+      		<if test="field=='pulsation'" >
+        		pulsation = #{value,jdbcType=INTEGER},
+      		</if>
+      		<if test="field=='greenTea'" >
+        		greenTea = #{value,jdbcType=INTEGER},
+      		</if>
+      		<if test="field=='tea'" >
+        		tea = #{value,jdbcType=INTEGER},
+      		</if>
+      		<if test="field=='noodles'" >
+        		noodles = #{value,jdbcType=INTEGER},
+      		</if>
+      		<if test="field=='wljjdb'" >
+        		WLJJDB = #{value,jdbcType=INTEGER},
+      		</if>
+	    </set>
+	    WHERE roomNum=#{roomNum} AND inTime=#{inTime};
+  	</update>
 	
 </mapper>
