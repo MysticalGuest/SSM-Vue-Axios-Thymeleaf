@@ -1,6 +1,6 @@
 /*********************************/
-/* Author  : 
-/* Contact : 
+/* Author  : MysticalGuest
+/* Contact : https://github.com/MysticalGuest
 ---------------------------------
 ----- CONTENTS
 ---------------------------------
@@ -130,8 +130,8 @@ body{
     background: #526583;
 }
 
-
 /*only for IE*/
+
 .submarine_bg_ie{
     width: 700px;
     margin-left: 35%;
@@ -151,7 +151,6 @@ body{
 /***********************************/
 /****- 3. ANIMATED ELEMENTS -******/
 /*********************************/
-
 
 /*---- 3. a. WATER WAVES ----*/
 
@@ -213,8 +212,7 @@ body{
     animation: bubble_l 2s linear infinite;
 }
 
-
-/*don't worry its for IE*/
+/* don't worry its for IE */
 .submarine_bg_ie img{
         
     -webkit-animation: submarine 4000ms linear infinite;
@@ -329,7 +327,6 @@ body{
     }
 }
 
-
 /*************************************/
 /****-  5. MEDIA QUERIES      -******/
 /***********************************/
@@ -367,7 +364,6 @@ body{
         top: 150px;
     }
 }
-
 
 /*************************************/
 /****-  6. LOADING CSS      ---******/

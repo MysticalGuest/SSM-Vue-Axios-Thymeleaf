@@ -1,7 +1,8 @@
-//##################################//
-// Author  :              //
-// Contact :    //
-//##################################//
+/*!
+ * js-error.js
+ * Create by MysticalGuest
+ * https://github.com/MysticalGuest
+ */
 
 //---------------------------//
 //  INTERNET EXPLORER CODE   //
@@ -9,6 +10,7 @@
 // It replaces svg with a png image for IE browsers.
 
 function IE() {
+
 	"use strict";
 	var ms_ie = false;
 	var ua = window.navigator.userAgent;
@@ -21,16 +23,16 @@ function IE() {
 
 	if (ms_ie) {
 		$('svg').css('display','none');
-		$('body').append("<div class='submarine_bg_ie' ><img src='img/png/submarine.png' width='100%' /></div> <div class='submarine_waves_ie' ><img src='img/png/waves.png' width='100%' /></div>");  
+		$('body').append("<div class='submarine_bg_ie'><img src='img/png/submarine.png' width='100%'/></div> <div class='submarine_waves_ie'><img src='img/png/waves.png' width='100%'/></div>");
 	}
 }
 
 //---------------------------//
 //  LOADING PAGE CODE        //
 //---------------------------//
-// It shows the loading animation for 3 seconds, before starting of the page/
+// It shows the loading animation for 3 seconds, before starting of the page.
 
-	$('.spinner').css('display','block');
+$('.spinner').css('display','block');
 $(function(){
 	$('svg').css('opacity','0');
 	$('nav').css('opacity','0');

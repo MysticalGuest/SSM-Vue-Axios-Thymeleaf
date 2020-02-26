@@ -1,4 +1,8 @@
-/* Create by MysticalGuest */
+/*!
+ * style-login.css
+ * Create by MysticalGuest
+ * https://github.com/MysticalGuest
+ */
 @CHARSET "UTF-8";
 body{height:100%; width:100%; overflow:hidden; margin:0; padding:0}
 .theme{
@@ -28,14 +32,13 @@ body{height:100%; width:100%; overflow:hidden; margin:0; padding:0}
 .table > tbody td {
 	padding: 7px;
 	margin: 0;
-	/* background-color: #d9edf7; */
-	/* height:20px !important; */
 }
 .panel-primary {
 	margin: 0px;
 	padding:0;
 	margin-bottom: 25px;
 }
+
 /* 移除HTML5 input在type="number"时的上下小箭头 */
 #roomNum::-webkit-outer-spin-button,
 #roomNum::-webkit-inner-spin-button{
@@ -43,3 +46,7 @@ body{height:100%; width:100%; overflow:hidden; margin:0; padding:0}
     margin: 0; 
 }
 
+/* apartment页面表格样式 */
+#apartment > tbody > tr > td {
+	padding: 6px;
+}

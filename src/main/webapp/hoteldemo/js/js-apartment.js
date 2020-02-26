@@ -1,33 +1,39 @@
-/**!
+/*!
  * js-apartment.js
- * 
+ * Create by MysticalGuest
+ * https://github.com/MysticalGuest
  */
 
-
+//---------------------------//
+//   JS FILE RECEIVES HTML   //
+//     PAGE PARAMETERS       //
+//---------------------------//
 // 房价下拉框
 var priceList;
+// 定义数组
 let priceJSON=[];
+// 表格数据
+var apartmentData;
+
+//---------------------------//
+//      FUNCTION CODE        //
+//---------------------------//
+/**
+ * 对数据加序号
+ * @param item 被加序号的对象
+ * @param index 序号
+ */
 function addSerialNum(item, index){
 	let data = {}
 	data.num=index+1;
 	data.price=item;
 	priceJSON.push(data);
 }
-priceList.forEach(addSerialNum);
-$(function() {
-	$('#priceList').bootstrapTable({
-		dataField: "num",
-		pagination: true,					//是否分页
-		pageSize: 10,						//单页记录数
-		clickToSelect: true,				//是否启用点击选中行
-		paginationDetailHAlign:'hidden',	//下面的分页信息不显示
-		data:priceJSON,
-		onClickRow: function(row) {
-			document.getElementById('roomPrice').value=row.price;
-		},									//单击row事件
-	}) 
-});
 
+/**
+ * 自定义格式化数据
+ * @param data 被格式化的数据
+ */
 function formatData(data){
 	var state='';
 	var rows = [];
@@ -45,6 +51,20 @@ function formatData(data){
 	return rows;
 }
 
+/**
+ * 自定义格式化数据
+ * @param row 对应行数据
+ * 必须放在表格初始化之前
+ */
+function formatAction(value,row,index){
+	var checkOut = '<button id="bind" style="cursor:pointer;border:1px solid #ccc;border-radius: 2px;">退房</button>';
+	if(row.state=="未开出")
+		return null;
+	else if(row.state=="已开出"){
+		return checkOut;
+	}
+}
+
 // 页面左边的搜索框等对应的方法
 new Vue({
 	el: '.form-group',
@@ -52,9 +72,8 @@ new Vue({
 	methods: {
 		doSearch:function(){
 			let roomNum = $("#roomNum").val();
-            let price = $("#roomPrice").val();
-            let state = $("input[name='state']:checked").val();
-//            console.log("state:",state);
+			let price = $("#roomPrice").val();
+			let state = $("input[name='state']:checked").val();
 			let param = new URLSearchParams();
 			param.append("roomNum", roomNum);
 			param.append("price", price);
@@ -72,11 +91,10 @@ new Vue({
 				console.log(error);
 			})
 		},
-		//显示全部,将所有输入置空
+		// 显示全部,将所有输入置空
 		showAll:function(){
-			//将搜索框的输入清空,还原input的状态
+			// 将搜索框的输入清空,还原input的状态
 			$(" #roomNum").val("");
-//			$("input[name='state']:checked").attr("checked",false);
 			$(":radio[name=state]:checked").prop("checked",false);
 			$("#roomPrice").val("");
 			let param = new URLSearchParams();
@@ -96,39 +114,39 @@ new Vue({
 				console.log(error);
 				BootstrapDialog.show({
 					title: '提示',
-				    message: '显示失败!',
-				    buttons: [{
-				        label: '确定',
-				        cssClass: 'btn-primary',
-				        action: function(dialogItself){
-				            dialogItself.close();
-				            location.href='/SSMHotel/front/ApartmentForFront'
-				        }
-				    }]
+					message: '显示失败!',
+					buttons: [{
+						label: '确定',
+						cssClass: 'btn-primary',
+						action: function(dialogItself){
+							dialogItself.close();
+							location.reload([true]);
+						}
+					}]
 				});
 			})
-    	},
-    	//多选退房
-    	checkOutChecked:function(){
-    		let checkedItems = $('#apartment').bootstrapTable('getAllSelections');
-    		console.log(checkedItems);
-    		let rooms = [];
+		},
+		// 多选退房
+		checkOutChecked:function(){
+			let checkedItems = $('#apartment').bootstrapTable('getAllSelections');
+			console.log(checkedItems);
+			let rooms = [];
 			$.each(checkedItems, function (index, item) {
 				rooms.push(item.roomNum);
 			});
-			//将rooms数组转为字符串传到后台
+			// 将rooms数组转为字符串传到后台
 			var strRoom=rooms.join(",")
 			if(rooms==""){
 				BootstrapDialog.show({
 					title: '提示',
-				    message: '您未选中任何房间!',
-				    buttons: [{
-				        label: '确定',
-				        cssClass: 'btn-primary',
-				        action: function(dialogItself){
-				            dialogItself.close();
-				        }
-				    }]
+					message: '您未选中任何房间!',
+					buttons: [{
+						label: '确定',
+						cssClass: 'btn-primary',
+						action: function(dialogItself){
+							dialogItself.close();
+						}
+					}]
 				});
 			}
 			else{
@@ -143,14 +161,14 @@ new Vue({
 				.then(function (response) {
 					BootstrapDialog.show({
 						title: '提示',
-					    message: '选中退房成功!',
-					    buttons: [{
-					        label: '确定',
-					        cssClass: 'btn-primary',
-					        action: function(dialogItself){
-					            dialogItself.close();
-					        }
-					    }]
+						message: '选中退房成功!',
+						buttons: [{
+							label: '确定',
+							cssClass: 'btn-primary',
+							action: function(dialogItself){
+								dialogItself.close();
+							}
+						}]
 					});
 					$("#apartment").bootstrapTable('load', formatData(response.data));
 				})
@@ -158,22 +176,22 @@ new Vue({
 					console.log(error);
 					BootstrapDialog.show({
 						title: '提示',
-					    message: '选中退房失败!',
-					    buttons: [{
-					        label: '确定',
-					        cssClass: 'btn-primary',
-					        action: function(dialogItself){
-					            dialogItself.close();
-					            location.href='/SSMHotel/front/ApartmentForFront'
-					        }
-					    }]
+						message: '选中退房失败!',
+						buttons: [{
+							label: '确定',
+							cssClass: 'btn-primary',
+							action: function(dialogItself){
+								dialogItself.close();
+								location.reload([true]);
+							}
+						}]
 					});
 				})
 			}
-    	},
-    	//全部退房调用函数
-    	allCheckOut:function(){
-    		axios({
+		},
+		// 全部退房调用函数
+		allCheckOut:function(){
+			axios({
 				url:'../commonOperation/allCheckOut',
 				method:'post',
 				header: {'Content-Type':'application/json'}
@@ -185,30 +203,27 @@ new Vue({
 				console.log(error);
 				BootstrapDialog.show({
 					title: '提示',
-				    message: '退房失败!',
-				    buttons: [{
-				        label: '确定',
-				        cssClass: 'btn-primary',
-				        action: function(dialogItself){
-				            dialogItself.close();
-				            location.href='/SSMHotel/front/ApartmentForFront'
-				        }
-				    }]
+					message: '退房失败!',
+					buttons: [{
+						label: '确定',
+						cssClass: 'btn-primary',
+						action: function(dialogItself){
+							dialogItself.close();
+							location.reload([true]);
+						}
+					}]
 				});
 			})
-    	}
+		}
 	}
 })
 
-// 这段必须放在表格初始化之前
-function formatAction(value,row,index){
-	var checkOut = '<button id="bind" style="cursor:pointer;border:1px solid #ccc;border-radius: 2px;">退房</button>';
-	if(row.state=="未开出")
-		return null;
-	else if(row.state=="已开出"){
-		return checkOut;
-	}
-}
+//根据窗口调整表格高度
+$(window).resize(function() {
+	$('#apartment').bootstrapTable('resetView', {
+		height: $(window).height() - 130
+	})
+})
 
 window.operateEvents = {
 	'click #bind': function (e, value, row, index) {
@@ -227,52 +242,47 @@ window.operateEvents = {
 			console.log(error);
 			BootstrapDialog.show({
 				title: '提示',
-			    message: '退房失败!',
-			    buttons: [{
-			        label: '确定',
-			        cssClass: 'btn-primary',
-			        action: function(dialogItself){
-			            dialogItself.close();
-			            location.href='/SSMHotel/front/ApartmentForFront'
-			        }
-			    }]
+				message: '退房失败!',
+				buttons: [{
+					label: '确定',
+					cssClass: 'btn-primary',
+					action: function(dialogItself){
+						dialogItself.close();
+						location.reload([true]);
+					}
+				}]
 			});
 		})
 	}
 };
 
-// 传来表格数据
-var apartmentData;
-
 $(function() {
+	// 对价格列表添加序号
+	priceList.forEach(addSerialNum);
+	$('#priceList').bootstrapTable({
+		dataField: "num",
+		pagination: true,					//是否分页
+		pageSize: 10,						//单页记录数
+		clickToSelect: true,				//是否启用点击选中行
+		paginationDetailHAlign:'hidden',	//下面的分页信息不显示
+		data:priceJSON,
+		onClickRow: function(row) {
+			document.getElementById('roomPrice').value=row.price;
+		},									//单击row事件
+	})
 	
 	$('#apartment').bootstrapTable({
-		dataField: "roomNum",	//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
-		height: tableHeight(),	//高度调整
-		pagination: true,		//是否分页
-		pageSize: 10,			//单页记录数
-		pageList: [10, 20, 50],	//分页步进值
-		// sidePagination: "server",//服务端分页
-		contentType: "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
-		dataType: "json",		//期待返回数据类型
-		method: "get",			//请求方式
-		// load: data,
+		dataField: "roomNum",
+		height: $(window).height() - 130,
+		pagination: true,
+		pageSize: 10,
+		pageList: [10, 20, 50],
+		contentType: "application/x-www-form-urlencoded",
+		dataType: "json",
+		method: "get",
 		columns: [
-			{
-				title: "全选",
-				field: "select",
-				checkbox: true,
-				width: 20,			//宽度
-				align: "center",	//水平
-				valign: "middle"	//垂直
-			},
-			{
-				title: "房号",		//标题
-				field: "roomNum",	//键名
-				sortable: true,		//是否可排序
-				align: "center",	//水平
-				valign: "middle"	//垂直
-			},
+			{title: "全选",field: "select",checkbox: true,width: 20,align: "center",valign: "middle"},
+			{title: "房号",field: "roomNum",sortable: true,align: "center",valign: "middle"},
 			{title: "价格",field: "price",align: "center",valign: "middle"},
 			{title: "房间状态",field: "state",align: "center",valign: "middle"},
 			{
@@ -281,17 +291,11 @@ $(function() {
 				align: "center",
 				valign: "middle",
 				formatter: 'formatAction',	//对本列数据做格式化
-				events: operateEvents,//给按钮注册事件
+				events: operateEvents,		//给按钮注册事件
 			}
 		],
-		locale: "zh-CN",	//中文支持
-		
+		locale: "zh-CN",
 	});
 	// 加载数据
 	$('#apartment').bootstrapTable('load', formatData(apartmentData));
 })
-
-
-function tableHeight() {
-	return $(window).height() - 110;
-}
