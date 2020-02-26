@@ -3,7 +3,6 @@ package com.distinguish.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,17 +15,7 @@ import com.distinguish.service.AdministratorService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 @Controller
 @RequestMapping("")
@@ -95,7 +84,6 @@ public class LoginController {
 		System.out.println("aPassword: "+aPassword);
 		Administrator administrator = new Administrator(AdmId,aPassword,"");
 		if( administratorService.login(administrator) == null ) { // 密码错误
-//			response.getWriter().print(apartmentList);
 			return false;
 		}
 		return true;
