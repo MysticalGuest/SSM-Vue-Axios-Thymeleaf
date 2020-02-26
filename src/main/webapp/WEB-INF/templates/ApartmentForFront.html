@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" th:href="@{/hoteldemo/img/bird.ico}"  type="image/x-icon"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>尊品360宾馆服务平台</title>
+	
+	<!-- 引入 Bootstrap -->
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-table.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-datetimepicker.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-dialog.css}"/>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/hoteldemo/css/style-font.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/hoteldemo/css/style-searchform.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/hoteldemo/css/button-function.css}"/>
+	
+	<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	<!-- jQuery文件,务必在bootstrap.min.js 之前引入 -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<!-- 包括所有已编译的插件 --><!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap-table.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap-table-zh-CN.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap-datetimepicker.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap-datetimepicker-zh-CN.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap-dialog.js}"></script>
+	
+	<!-- Vue -->
+	<script th:src="@{/js/vue.min.js}"></script>
+	<!-- axios -->
+	<script th:src="@{/js/axios.min.js}"></script>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row clearfix">
+			<div class="col-sm-4 col-md-5">
+				<img class="img-responsive pull-right" th:src="@{../hoteldemo/img/360black.png}" >
+			</div>
+			<div class="col-sm-8 col-md-7">
+				<h1 class="theme">尊品360宾馆服务平台</h1>
+			</div>
+		</div>
+		<div class="row clearfix">
+			<div class="col-sm-2 col-md-2 sidebar">
+				<div class="form-group">
+					<input type='number' class="form-control" id='roomNum' placeholder="根据房号查询:" 
+					autocomplete="off" v-on:input="doSearch()" />
+					<div class="input-group">
+						<input id="roomPrice" type="text" class="form-control">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-primary
+							dropdown-toggle" data-toggle="dropdown">选择价格
+								<span class="caret"></span>
+							</button>
+							<div class="dropdown-menu" data-stopPropagation="true">
+								<table id="priceList" class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th data-field="num" class="text-center">序号</th>
+											<th data-field="price" class="text-center">房价</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div><!-- /input-group -->
+					<div class="panel panel-primary">
+						<div class="panel-heading">根据房间状态查询:</div>
+						<div class="panel-body">
+							<label class="radio-inline">
+								<input type="radio" name="state" value="true">已开出
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="state"  value="false">未开出
+							</label>
+						</div>
+					</div>
+					<button type="button" class="btn btn-primary btn-sm btn-block" @click="doSearch()">
+						<span class="glyphicon glyphicon-search"></span> 按条件搜索
+					</button>
+					<button type="button" class="btn btn-success btn-sm btn-block" @click="showAll()">
+						<span class="glyphicon glyphicon-leaf"></span> 显示全部
+					</button>
+					<button type="button" class="btn btn-primary btn-sm btn-block" @click="checkOutChecked()">
+						<span class="glyphicon glyphicon-log-out"></span> 多选退房
+					</button>
+					<button type="button" class="btn btn-success btn-sm btn-block" @click="allCheckOut()">
+						<span class="glyphicon glyphicon-send"></span> 全部退房
+					</button>
+				</div>
+			</div>
+			<div class="col-sm-8 col-md-8 main">
+				<table id="apartment" class="table table-bordered table-hover"></table>
+			</div>
+			<div class="col-sm-2 col-md-2 sidebar">
+				<ul class="index-tserver">
+					<li class="tserver-list1">
+						返回首页
+						<p class="animated zoomin">
+							<a th:href="@{HomeOfFront}" style="text-decoration: none;">返回首页，执行其他选项操作</a>
+						</p>
+					</li>
+					<li class="tserver-list2">
+						敬请期待
+						<p class="animated zoomin">
+							<a href="#"></a>
+						</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		// 房价下拉框
+		var priceList=[[${priceList}]];
+		// 初始化页面时房间数据
+		var apartmentData=[[${apartmentList}]];
+	</script>
+	<script th:src="@{/hoteldemo/js/js-apartment.js}"></script>
+</body>
+</html>

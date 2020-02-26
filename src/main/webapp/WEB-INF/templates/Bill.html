@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" th:href="@{/hoteldemo/img/bird.ico}"  type="image/x-icon"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>尊品360宾馆服务平台</title>
+	<!-- 引入 Bootstrap -->
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-table.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-dialog.css}"/>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/hoteldemo/css/button-bill.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/hoteldemo/css/style-bill.css}"/>
+	
+	<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	<!-- jQuery文件,务必在bootstrap.min.js 之前引入 -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<!-- 包括所有已编译的插件 --><!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap-table.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap-table-zh-CN.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap-dialog.js}"></script>
+	
+	<!-- Vue -->
+	<script th:src="@{/js/vue.min.js}"></script>
+	<!-- axios -->
+	<script th:src="@{/js/axios.min.js}"></script>
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<td class="td-1" colspan="11">尊品360宾馆欢迎您！</td>
+		</tr>
+		<tr>
+			<td class="td-2-1" colspan="2"><strong>日期：</strong></td>
+			<td class="td-2-3" colspan="2"><div id="nowdate"></div></td>
+			<td class="td-2-5"><strong>客人姓名：</strong></td>
+			<td class="td-2-6">
+				<div id="cName" contenteditable="true"></div>
+				<input  type="hidden" name="forcName" id="forcName" />
+			</td>
+			<td class="td-2-7"><strong>房号：</strong></td>
+			<td class="td-2-8" colspan="2">
+				<div class="input-group">
+					<input id="room" type="text" class="form-control">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default 
+						dropdown-toggle" data-toggle="dropdown">选择
+							<span class="caret"></span>
+						</button>
+						<div class="dropdown-menu" data-stopPropagation="true">
+							<table id="apartment" class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th data-field="ck"></th>
+										<th data-field="roomNum" class="text-center">房号</th>
+										<th data-field="price" class="text-center">房价</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div><!-- /btn-group-->
+				</div><!-- /input-group -->
+			</td>
+			<td class="td-2-10"><strong>操作员：</strong></td>
+			<td class="td-2-11" th:text="${session.loginor.aName}"></td>
+		</tr>
+		<tr>
+			<td class="td-3-1" colspan="2"><strong>记账项目</strong></td>
+			<td><strong>入住时间</strong></td>
+			<td><strong>总计天数</strong></td>
+			<td><strong>房间价格</strong></td>
+			<td><strong>数量</strong></td>
+			<td><strong>押金</strong></td>
+			<td class="td-3-8" colspan="4"><strong>其他消费</strong></td>
+		</tr>
+		<tr>
+			<td class="td-4-1" colspan="2">
+				<input name="roomType" type="radio" checked="checked" value="allDay"/>
+				<strong>日住全天房：</strong>
+			</td>
+			<td rowspan="2"><div id="nowtime"></div></td>
+			<!-- 总计天数 -->
+			<td class="td-4-4"><input type="number" min="0"></td>
+			<!-- 房间价格 -->
+			<td class="td-4-5"><div id="sumOfPrice1"></div>元</td>
+			<!-- 数量 -->
+			<td class="td-4-6"><div id="sumOfRooms1"></div>间</td>
+			<!-- 押金 -->
+			<td class="td-4-7"><div id="deposit1"></div>元</td>
+			<td class="td-4-8" colspan="4"></td>
+		</tr>
+		<tr>
+			<td class="td-5-1" colspan="2">
+				<input name="roomType" type="radio" value="hour"/><strong>日住钟点房：</strong>
+			</td>
+			<!-- 上一行td时间占了2行rowspan=2 -->
+			<!-- 总计天数 -->
+			<td class="td-5-4"><input type="number" min="0"></td>
+			<!-- 房间价格 -->
+			<td class="td-5-5"><div id="sumOfPrice2"></div>元</td>
+			<!-- 数量 -->
+			<td class="td-5-6"><div id="sumOfRooms2"></div>间</td>
+			<!-- 押金 -->
+			<td class="td-5-7"><div id="deposit2"></div>元</td>
+			<td class="td-5-8" colspan="4"></td>
+		</tr>
+		<tr>
+			<td class="td-6-1" colspan="2"><strong>房费和押金：</strong></td>
+			<td class="td-6-3">
+				<div id="chargeAndDeposit" contenteditable="true">200</div>元
+				<input name="fee" id="fee" type="hidden" />
+			</td>
+			
+			<td colspan="3"></td>
+			<td class="td-6-7" colspan="5"><strong>欢迎光临尊品360宾馆！</strong></td>
+			
+		</tr>
+		<tr>
+			<td class="td-7-1"><strong>地址：</strong></td>
+			<td class="td-7-2" colspan="4">湖北省襄阳市襄州区航空路铁十一局旁</td>
+			<td class="td-7-6"><strong>服务电话：</strong></td>
+			<td class="td-7-7" >0710-2919966</td>
+			<td class="td-7-8" colspan="4"><strong>欢迎再次光临尊品360宾馆！</strong></td>
+		</tr>
+	</table>
+	
+	<div id="button" class="main-box">
+		<ul class="index-tserver">
+			<li class="tserver-list1">
+				返回首页
+				<p class="animated zoomin">
+					<a th:href="@{HomeOfFront}">返回首页，执行其他选项操作</a>
+				</p>
+			</li>
+			<li class="tserver-list2">
+				打印发票
+				<p class="animated zoomin">
+					<a href = "javascript:void(0)" v-on:click="datasubmit()">点击打印发票</a>
+				</p>
+			</li>
+		</ul>
+		<div id="cardbox">
+			<input id="cardID" name="cardID" type="text" placeholder='身份证号:' />
+		</div>
+		<div id="paymentbox">
+			支付方式:<br>
+			现金<input name="paymentMethod" type="radio" value="现金" />
+			微信<input name="paymentMethod" type="radio" value="微信" />
+			支付宝<input name="paymentMethod" type="radio" value="支付宝" /><br>
+			刷卡<input name="paymentMethod" type="radio" value="刷卡" />
+			其他<input name="paymentMethod" type="radio" value="其他" />
+		</div>
+	</div>
+	<script th:inline="javascript">
+		// 房号树形下拉框
+		var dataROOM=[[${apartmentList}]];
+		// 加载时间
+		var hourRoomPrice=[[${hourRoomPrice}]];
+	</script>
+	<script th:src="@{/hoteldemo/js/js-bill.js}"></script>
+</body>
+</html>

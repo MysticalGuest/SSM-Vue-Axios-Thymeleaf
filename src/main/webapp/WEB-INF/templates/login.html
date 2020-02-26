@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
 	<link rel="shortcut icon" th:href="@{hoteldemo/img/bird.ico}"  type="image/x-icon"/>
@@ -15,11 +15,9 @@
 </head>
 <body>
 	<div class="login-container">
-		
 		<div class="connect">
 			<p>系统账号登录</p>
 		</div>
-		
 		<form th:action="@{/login}" th:method="post" id="loginForm" onsubmit="return validateLimit()">
 			<input type="text" name="AdmId" class="AdmId" placeholder="账号" autocomplete="off"/>
 			

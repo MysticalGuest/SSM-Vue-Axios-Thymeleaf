@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" th:href="@{/hoteldemo/img/bird.ico}"  type="image/x-icon"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>尊品360宾馆服务平台</title>
+	<link rel="stylesheet" th:href="@{/hoteldemo/css/style-font.css}">
+	<link rel="stylesheet" th:href="@{/hoteldemo/css/style-home.css}">
+	
+	<script th:src="@{/js/jquery.min.js}"></script>
+</head>
+<body>
+	<div class="auto-box">
+		<div class="main-box">
+			<div class="index-tit">
+				<p class="title">尊品360宾馆服务平台</p>
+				<h1><span th:text="${session.loginor.aName}"></span>正在运行平台！比标准服务更多的，是精益求精的360°服务</h1>
+				<p class="subtitle">千锤百炼打造面向顾客的全程服务</p>
+			</div>
+			<ul class="index-tserver">
+				<li class="tserver-list1">
+					顾客信息统计
+					<p class="animated zoomin">
+						<a href="GuestInfoForAdm">查询所以已打印发票的房客基本信息</a>
+					</p>
+				</li>
+				<li class="tserver-list2">
+					综合管理
+					<p class="animated zoomin">
+						<a href="IntegratedManagement">前台信息进行管理，对其他消费的一些商品和钟点房做价格调整</a>
+					</p>
+				</li>
+				<li class="tserver-list3">
+					客房管理
+					<p class="animated zoomin">
+						<a href="ApartmentForAdm">查看，更改房间状态</a>
+					</p>
+				</li>
+				<li class="tserver-list4">
+					账目管理
+					<p class="animated zoomin">
+						<a href="Account">宾馆所有统计账目</a>
+					</p>
+				</li>
+				<li class="tserver-list5">
+					账目统计
+					<p class="animated zoomin">
+						<a href="Statistics">宾馆每日统计账目，宾馆每周、每月、每季度、每年账目详计</a>
+					</p>
+				</li>
+				<li class="tserver-list6">
+					敬请期待
+					<p class="animated zoomin">
+						<a href="#"></a>
+					</p>
+				</li>
+				<li class="tserver-list7">
+					退出
+					<p class="animated zoomin">
+						<a th:href="@{/logout}">回退到尊品360服务平台登录界面</a>
+					</p>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

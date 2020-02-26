@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" th:href="@{/hoteldemo/img/bird.ico}"  type="image/x-icon"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>尊品360宾馆服务平台</title>
+	
+	<!-- 引入 Bootstrap -->
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/hoteldemo/css/style-font.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/hoteldemo/css/style-account.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/hoteldemo/css/style-chart.css}"/>
+	
+	<!-- jQuery文件,务必在bootstrap.min.js 之前引入 -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+	
+	<!-- 包括所有已编译的插件 --><!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	
+	<!-- Echarts -->
+	<script th:src="@{/js/echarts.min.js}"></script>
+</head>
+  
+<body>
+	<div class="container-fluid">
+		<!--头部-->
+		<div class="row clearfix">
+			<div class="header">
+				尊品360宾馆账目统计
+				<a href="javascript:void(0)" th:onclick="'javascript:JumpPage(\''+${flag}+'\')'" class="a-access">
+					<button class="button type">
+						返回首页
+					</button>
+				</a>
+			</div>
+		</div>
+		<!--主体-->
+		<div class="row clearfix">
+			<div class="main-left">
+				<div class="border-container">
+					<div class="name-title">
+						<p class="font-title">===周营业额比较===</p>
+					</div>
+					<div id="doubleWeeks"></div>
+					<span class="top-left border-span"></span>
+					<span class="top-right border-span"></span>
+					<span class="bottom-left border-span"></span>
+					<span class="bottom-right border-span"></span>
+				</div>
+			</div>
+			<div class="main-middle">
+				<div class="border-container">
+					<ul class="teacher-pie clearfix">
+						<li>
+							<div class="form-inline name-title">
+								<p class="font-title">===上月营业额比较===</p>
+							</div>
+							<div id="lastMonth"></div>
+						</li>
+						<li>
+							<div class="name-title">
+							   <p class="font-title">===本月营业额比较===</p>
+							</div>
+							<div id="thisMonth"></div>
+						</li>
+					</ul>
+	
+					<div class="name-title">
+						<p class="font-title">===近年营业额比较===</p>
+					</div>
+					<div id="changedetail"></div>
+					<span class="top-left border-span"></span>
+					<span class="top-right border-span"></span>
+					<span class="bottom-left border-span"></span>
+					<span class="bottom-right border-span"></span>
+				</div>
+			</div>
+			<div class="main-right">
+				<div class="border-container">
+					<div class="name-title">
+						<p class="font-title">===本季度营业额比较===</p>
+					</div>
+					<div id="quarter"></div>
+					<span class="top-left border-span"></span>
+					<span class="top-right border-span"></span>
+					<span class="bottom-left border-span"></span>
+					<span class="bottom-right border-span"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		/* 
+		 * Java后台使用EL传值给JS文件
+		 * 方案一：对全局变量赋值。EL表达式必须放在""里
+		 */
+		// 本周
+		var profitPerDayListThisWeek = [[${profitPerDayListThisWeek}]];
+		// 上周
+		var profitPerDayListLastWeek = [[${profitPerDayListLastWeek}]];
+		// 上月
+		var JSONListLastMonth = [[${JSONListLastMonth}]];
+		// 本月
+		var JSONListThisMonth = [[${JSONListThisMonth}]];
+		// 今年每季度
+		var profitPerQuarterListThisYear = [[${profitPerQuarterListThisYear}]];
+		// 近几年年份
+		var yearList = [[${yearList}]];
+		// 近几年营业额
+		var profitPerYearList = [[${profitPerYearList}]];
+	</script>
+	<script type="text/javascript" th:src="@{/hoteldemo/js/js-chart.js}"></script>
+</body>
+</html>

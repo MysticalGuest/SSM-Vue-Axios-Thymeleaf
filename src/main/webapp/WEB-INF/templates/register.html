@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" th:href="@{hoteldemo/img/bird.ico}"  type="image/x-icon"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>尊品360宾馆服务平台</title>
+	<link rel="stylesheet" th:href="@{hoteldemo/css/style-login.css}">
+	
+	<script th:src="@{js/jquery.min.js}"></script>
+	<!--表单验证-->
+	<script th:src="@{js/jquery.validate.min.js}"></script>
+	<script th:src="@{js/modernizr.custom.js}"></script>
+	
+</head>
+<body>
+	<div class="register-container">
+		<div class="connect">
+			<p>系统账号注册</p>
+		</div>
+		
+		<form action="" method="post" id="registerForm">
+			<div>
+				<input type="text" name="AdmId" class="AdmId" placeholder="您的用户名" autocomplete="off"/>
+			</div>
+			<div>
+				<input type="password" name="aPassword" class="aPassword" placeholder="输入密码" oncontextmenu="return false" />
+			</div>
+			<div>
+				<input type="password" name="confirm_password" class="confirm_password" placeholder="再次输入密码" oncontextmenu="return false" />
+			</div>
+
+			<button id="submit" type="submit">注 册</button>
+		</form>
+		
+		<a th:href="@{login}">
+			<button type="button" class="register-tis">已经有账号？</button>
+		</a>
+	</div>
+	<script th:src="@{hoteldemo/js/js-login.js}"></script>
+</body>
+</html>

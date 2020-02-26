@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" th:href="@{/hoteldemo/img/bird.ico}"  type="image/x-icon"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>尊品360宾馆服务平台</title>
+	<!-- 引入 Bootstrap -->
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-table.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-dialog.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/hoteldemo/css/style-font.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/hoteldemo/css/style-account.css}"/>
+	
+	<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	<!-- jQuery文件,务必在bootstrap.min.js 之前引入 -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<!-- 包括所有已编译的插件 --><!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap-table.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap-table-zh-CN.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap-dialog.js}"></script>
+	
+	<!-- Vue -->
+	<script th:src="@{/js/vue.min.js}"></script>
+	<!-- axios -->
+	<script th:src="@{/js/axios.min.js}"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<!--头部-->
+		<div class="row clearfix header">
+			尊品360宾馆当日账目详计
+			<a th:href="HomeOfAdm" class="a-access">
+				<button class="button type">
+					返回首页
+				</button>
+			</a>
+		</div>
+		<div class="row clearfix">
+			<div class="main">
+				<div id="layer02" class="layer" style="height:15%;">
+					<div id="layer02_01" style="width:18%;">
+						<div class="layer02-data">
+							<span style="font-size:26px;"  th:text="${numOfRoom}"></span>
+							<span style="font-size:16px;">间</span>
+						</div>
+						<canvas width="200" height="100"></canvas>
+					</div>
+					<div id="layer02_02" style="width:18%;">
+						<div class="layer02-data">
+							<span style="font-size:26px;" th:text="${numOfBill}"></span>
+							<span style="font-size:16px;">张</span>
+						</div>
+						<canvas width="200" height="100"></canvas>
+					</div>
+					<div id="layer02_03" style="width:17%;">
+						<div class="layer02-data">
+							<span style="font-size:26px;" th:text="${ChargeAndDeposit}"></span>
+							<span style="font-size:16px;">元</span>
+						</div>
+						<canvas width="200" height="100"></canvas>
+					</div>
+					<!-- 截止目前的净营业额 -->
+					<div id="layer02_04" style="width:18%;">
+						<div class="layer02-data">
+							<span style="font-size:26px;" th:text="${profit}"></span>
+							<span style="font-size:16px;">元</span>
+						</div>
+						<canvas width="200" height="100"></canvas>
+					</div>
+					<!-- 押金 -->
+					<div id="layer02_05" style="width:14%;">
+						<div class="layer02-data">
+							<span style="font-size:26px;" th:text="${deposit}"></span>
+							<span style="font-size:16px;">元</span>
+						</div>
+						<canvas width="160" height="100"></canvas>
+					</div>
+					<!-- 其他消费 -->
+					<div id="layer02_06" style="width:14%;">
+						<div class="layer02-data">
+							<span style="font-size:26px;" id="forTotal"></span>
+							<span style="font-size:16px;">元</span>
+						</div>
+						<canvas width="160" height="100"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row clearfix form-inline">
+			<div class="col-sm-5 col-md-5 col-md-offset-1">
+				<table id="billList" class="table table-bordered table-hover">
+				</table>
+			</div>
+			<div class="col-sm-5 col-md-5">
+				<table id="allExpenseInfo" class="table table-bordered table-hover">
+				</table>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		var total=[[${total}]];
+		// 初始化页面时数据
+		var billData=[[${billList}]];
+	</script>
+	<script th:src="@{/hoteldemo/js/js-account.js}"></script>
+</body>
+</html>
