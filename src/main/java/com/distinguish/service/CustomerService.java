@@ -14,9 +14,15 @@ public interface CustomerService {
 	
 	int getNumOfBillPerDay();
 	
+	int getNumOfBill();
+	
 	List<String> getNumOfRoomPerDay();
 	
+	List<String> getNumOfRoom();
+	
 	int getSumOfFeePerDay();
+	
+	int getSumOfFee();
 	
 	int getProfit(Customer customer);
 

@@ -9,4 +9,6 @@ public interface ExpenseService {
 	List<Expense> getAllKinds();
 
 	int getHourRoom();
+	
+	int updatePrice(Expense expense);
 }

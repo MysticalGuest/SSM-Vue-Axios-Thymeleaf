@@ -24,4 +24,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 	public int getHourRoom() {
 		return expenseDao.getHourRoom();
 	}
+	
+	@Override
+	public int updatePrice(Expense expense) {
+		return expenseDao.updatePrice(expense);
+	}
 }

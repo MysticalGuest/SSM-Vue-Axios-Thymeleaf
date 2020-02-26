@@ -22,8 +22,18 @@ public class BillServiceImpl implements BillService {
 	}
 	
 	@Override
+	public Map<String, Integer> getPerKindsTotal() {
+		return billDao.getPerKindsTotal();
+	}
+	
+	@Override
 	public List<Map<String, Object>> getRoomChargePerCustomerPerDay() {
 		return billDao.getRoomChargePerCustomerPerDay();
+	}
+	
+	@Override
+	public List<Map<String, Object>> getRoomChargePerCustomer() {
+		return billDao.getRoomChargePerCustomer();
 	}
 	
 	@Override
@@ -62,7 +72,18 @@ public class BillServiceImpl implements BillService {
 	}
 	
 	@Override
+	public int updateExpense(Map<String,Object> map) {
+		return billDao.updateExpense(map);
+	}
+	
+	@Override
 	public List<Bill> getBillPerDay() {
 		return billDao.getBillPerDay();
 	}
+	
+	@Override
+	public List<Bill> getBill() {
+		return billDao.getBill();
+	}
+
 }

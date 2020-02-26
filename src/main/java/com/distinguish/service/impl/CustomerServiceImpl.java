@@ -36,13 +36,28 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
+	public int getNumOfBill() {
+		return customerDao.getNumOfBill();
+	}
+	
+	@Override
 	public List<String> getNumOfRoomPerDay() {
 		return customerDao.getNumOfRoomPerDay();
 	}
 	
 	@Override
+	public List<String> getNumOfRoom() {
+		return customerDao.getNumOfRoom();
+	}
+	
+	@Override
 	public int getSumOfFeePerDay() {
 		return customerDao.getSumOfFeePerDay();
+	}
+	
+	@Override
+	public int getSumOfFee() {
+		return customerDao.getSumOfFee();
 	}
 	
 	@Override
