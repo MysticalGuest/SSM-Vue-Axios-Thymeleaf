@@ -11,5 +11,7 @@ public interface ExpenseDao {
 	
 	//我用expense表存了一个钟点房价格,查询钟点房
 	int getHourRoom();
+	
+	int updatePrice(Expense expense);
 
 }
