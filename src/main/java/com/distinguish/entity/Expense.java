@@ -18,6 +18,13 @@ public class Expense {
 		this.price=price;
 	}
 
+	public Expense(String kinds, String name,int price) {
+		super();
+		this.kinds=kinds;
+		this.name=name;
+		this.price=price;
+	}
+
 	public String getKinds() {
 		return kinds;
 	}
