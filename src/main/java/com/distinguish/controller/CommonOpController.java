@@ -3,12 +3,7 @@ package com.distinguish.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -425,7 +420,8 @@ public class CommonOpController {
         	yearList.add(Integer.parseInt(String.valueOf(billTheseYearsList.get(i).get("inDate"))));
         }
         //将年份从小到大排序
-        yearList.sort(null);
+//        yearList.sort(null);
+		Collections.sort(yearList);
         //将年份传到前台
         model.addAttribute("yearList", yearList);
         
